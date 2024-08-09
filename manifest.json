@@ -1,0 +1,16 @@
+{
+    "name": "台灣物流自動匯入",
+    "version": "1.0",
+    "manifest_version": 3,
+    "description": "自動查詢貨物網站將貨運單號自動匯入到物流機器人內",
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "images/icon16.png"
+        }
+    },
+    "permissions": ["webRequest"],
+    "host_permissions": [
+        "*://ecvip.pchome.com.tw/*"
+    ]
+  }
