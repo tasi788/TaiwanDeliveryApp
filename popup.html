@@ -1,10 +1,18 @@
 <!doctype html>
 <html>
+  <meta charset="utf-8">
   <head>
     <title>台灣物流機器人</title>
     <style>
       body {
+        width: 200px;
         text-align: center;
+        font-family: Arial, sans-serif;
+        background-color: #3d405b;
+        color: #f4f1de;
+        border: 2px solid white;
+        border-radius: 10px;
+        padding: 1rem;
       }
 
 
@@ -13,12 +21,28 @@
         outline: none;
       }
 
+      {# .status {
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #f4f1de;
+        border-radius: 10px;
+        background-color: #f4f1de;
+        color: #3d405b;
+      } #}
+
     </style>
   </head>
   <body>
+
     <h1>台灣物流機器人</h1>
-    <input type="text" id="account" placeholder="API">
-    <button id="login" value="login">登入</button>
-    <!-- <script src="popup.js"></script> -->
+    <div id="status">
+      <span id="login_status">尚未登入</span>
+    </div>
+    <div id="login_input">
+      <input type="text" id="account" placeholder="請輸入 API 金鑰">
+      <button id="login">登入</button>
+    </div>
+    <script src="popup.js"></script>
+
   </body>
 </html>

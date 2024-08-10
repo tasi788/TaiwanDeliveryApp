@@ -1,0 +1,13 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@types/chrome": "^0.0.269",
+    "typescript": "^5.5.4"
+  },
+  "scripts": {
+    "clean": "rmdir /S /Q dist",
+    "compile": "npx tsc",
+    "copy-assets": "copy manifest.json dist & xcopy images dist\\images\\ /E /I & xcopy *.html dist /Y",
+    "build": "npm run clean & npm run compile & npm run copy-assets"
+  }
+}
