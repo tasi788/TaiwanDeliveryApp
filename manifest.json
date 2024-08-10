@@ -3,13 +3,25 @@
     "version": "1.0",
     "manifest_version": 3,
     "description": "自動查詢貨物網站將貨運單號自動匯入到物流機器人內",
+    "author": {
+        "email": "twdelivery@futa.gg"
+    },
+    "icons": {
+        "16": "images/icon16.png",
+        "32": "images/icon32.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
     "action": {
         "default_popup": "popup.html",
         "default_icon": {
-            "16": "images/icon16.png"
+            "16": "images/icon16.png",
+            "32": "images/icon32.png",
+            "48": "images/icon48.png",
+            "128": "images/icon128.png"
         }
     },
-    "permissions": ["webRequest"],
+    "permissions": ["webRequest", "storage"],
     "host_permissions": [
         "*://ecvip.pchome.com.tw/*"
     ]
