@@ -22,6 +22,11 @@ class API {
 }
 
 
+async function getPackage() {
+    const url = "https://ecvip.pchome.com.tw/ecapi/order/v2/index.php/core/order?site=ecshop&offset=1&limit=20&date="
+    await fetch(url, {}).then(response => response.json()).then(data => {console.log(data)});
+}
+
 
 chrome.storage.sync.get(['api'], function (result) {
     if (result.api) {
@@ -31,14 +36,16 @@ chrome.storage.sync.get(['api'], function (result) {
         document.getElementById('logout')!.replaceChildren('登出');
         document.getElementById('logout')!.addEventListener('click', btnLogout);
         let login_status = document.getElementById('login_status');
-        login_status!.innerHTML = '已登入: ' + result.api;
+        login_status!.innerHTML = '已登入: ' + result.api.token.split(':')[0];
+
+        let manmaulBtn = document.createElement('button');
         
-        // let newButton = document.createElement('button');
-        // newButton.textContent = '匯入包裹';
-        // newButton.id = 'import';
-        
+        manmaulBtn.textContent = '手動匯入包裹';
+        manmaulBtn.id = 'import';
+        manmaulBtn.addEventListener('click', getPackage);
+        let login_area = document.getElementById('login_area');
         // // Append the button to login_input
-        // login_input?.appendChild(newButton);
+        login_area?.appendChild(manmaulBtn);
     } else {
         document.getElementById('login')!.addEventListener('click', btnLogin);
     }
