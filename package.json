@@ -2,6 +2,8 @@
   "type": "module",
   "dependencies": {
     "@types/chrome": "^0.0.269",
+    "bulma": "^1.0.2",
+    "bulma-extensions": "^6.2.7",
     "typescript": "^5.5.4"
   },
   "scripts": {
@@ -9,5 +11,8 @@
     "compile": "npx tsc",
     "copy-assets": "copy manifest.json dist & xcopy images dist\\images\\ /E /I & xcopy *.html dist /Y",
     "build": "npm run clean & npm run compile & npm run copy-assets"
+  },
+  "devDependencies": {
+    "@types/node": "^22.4.0"
   }
 }

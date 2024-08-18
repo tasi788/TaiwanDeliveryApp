@@ -1,1 +1,1 @@
-dist/popup.js
+./dist/popup.js

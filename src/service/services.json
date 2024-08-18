@@ -1,0 +1,14 @@
+{
+    "servies": [
+        {
+            "name": "PChome 24h購物",
+            "label": "pchome24h",
+            "url": "https://24h.pchome.com.tw/"
+        },
+        {
+            "name": "蝦皮購物",
+            "label": "shopeetw",
+            "url": "https://shopee.tw/"
+        }
+    ]
+}
