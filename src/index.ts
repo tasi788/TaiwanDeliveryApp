@@ -1,25 +1,30 @@
-import './index.scss';
-
 interface Service {
-    id: number;
-    name: string;
-    description: string;
+    name: number;
+    label: string;
+    url: string;
 }
 
-function loadServices(): Service[] | null {
-    fetch('./service/services.json')
+interface ServiceList {
+    services: Service[];
+}
+
+function loadServices(): Promise<ServiceList> {
+    return fetch('./services.json')
         .then(response => response.json())
-        .then(data => {
-            const services: Service[] = data as Service[];
-            console.log(data);
-            return services;
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            return null;
-        });
-    return null;
+        .then(data => data as ServiceList);
 }
 
-const services = loadServices();
-console.log(services);
+let serviceslist: Promise<ServiceList> = loadServices();
+const field = document.getElementsByClassName("field");
+serviceslist.then(service => {
+    service.services.forEach(service => {
+        console.log(service);
+        let div = document.createElement("div");
+        div.className = "cell";
+        div.innerHTML = `<input id="${service.label}" type="checkbox" name="${service.label}" class="switch is-warning">
+        <label for="${service.label}" >${service.name}</label>`;
+        field[0].appendChild(div);
+    }
+    )
+});
+
