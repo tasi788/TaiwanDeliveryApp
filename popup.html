@@ -1,39 +1,46 @@
 <!doctype html>
 <html>
+
+<head>
+  <title>台灣物流機器人</title>
   <meta charset="utf-8">
-  <head>
-    <title>台灣物流機器人</title>
-    <style>
-      body {
-        width: 200px;
-        text-align: center;
-        font-family: Arial, sans-serif;
-        background-color: #3d405b;
-        color: #f4f1de;
-        border: 2px solid white;
-        border-radius: 10px;
-        padding: 1rem;
-      }
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="notification ">
+      <div class="field">
+        <h1 class="title">台灣物流機器人自動匯入助手</h1>
+        <label class="label" id="login_status">API 金鑰</label>
+        <div class="control has-icons-left" id="input_area">
+          <input id="input_token" class="input" type="text" placeholder="請填入 API 金鑰">
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="field is-grouped">
+        <div class="control" id="footer-btn">
+          <button id="login_btn" class="button is-link">登入</button>
+        </div>
+      </div>
+    </div>    
+  </div>
 
 
-      button {
-        margin: 5px;
-        outline: none;
-      }
-
-    </style>
-  </head>
-  <body>
-
-    <h1>台灣物流機器人</h1>
+  <!-- <h1>台灣物流機器人</h1>
     <div id="status">
       <span id="login_status">尚未登入</span>
     </div>
     <div id="login_area">
       <input type="text" id="account" placeholder="請輸入 API 金鑰">
       <button id="login">登入</button>
-    </div>
-    <script src="popup.js"></script>
+    </div> -->
+  <script src="popup.js"></script>
 
-  </body>
+</body>
+
 </html>

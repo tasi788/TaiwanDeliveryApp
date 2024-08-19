@@ -23,23 +23,26 @@ class API {
 
 chrome.storage.sync.get(['api'], function (result) {
     if (result.api) {
-        let login_input = document.getElementById('account');
-        login_input!.remove();
-        document.getElementById('login')!.id = 'logout';
-        document.getElementById('logout')!.replaceChildren('登出');
-        document.getElementById('logout')!.addEventListener('click', btnLogout);
+        document.getElementById('input_area')!.remove();
+        
+        document.getElementById('login_btn')!.id = 'logout_btn';
+        document.getElementById('logout_btn')!.replaceChildren('登出');
+        document.getElementById('logout_btn')!.addEventListener('click', btnLogout);
+        document.getElementById('logout_btn')!.className = 'button is-warning';
+
         let login_status = document.getElementById('login_status');
         login_status!.innerHTML = '已登入: ' + result.api.token.split(':')[0];
 
-        let manmaulBtn = document.createElement('button');
-        
-        manmaulBtn.textContent = '手動匯入包裹';
-        manmaulBtn.id = 'import';
-        // manmaulBtn.addEventListener('click', getPackage);
-        let login_area = document.getElementById('login_area');
-        login_area?.appendChild(manmaulBtn);
+        let configpage = document.createElement('button');
+        configpage.textContent = '設定';
+        configpage.className = 'button is-info';
+        configpage.onclick = () => {
+            open('index.html');
+        };
+        document.getElementById('footer-btn')!.appendChild(configpage);
+        // login_area?.appendChild(manmaulBtn);
     } else {
-        document.getElementById('login')!.addEventListener('click', btnLogin);
+        document.getElementById('login_btn')!.addEventListener('click', btnLogin);
     }
     chrome.alarms.get("printLog").then((alarm) => {console.log(alarm);});
     // console.log(al);
@@ -54,7 +57,7 @@ async function btnLogout() {
 }
 
 async function btnLogin() {
-    let login_input = document.getElementById('account') as HTMLInputElement;
+    let login_input = document.getElementById('input_token') as HTMLInputElement;
     let api_token = login_input.value;
     let client = new API(api_token);
     if (await client.login() === false) {
