@@ -1,21 +1,5 @@
-interface Service {
-    name: number;
-    label: string;
-    url: string;
-    enable: boolean | undefined;
-}
-
-interface ServiceList {
-    services: Service[];
-}
-
-interface ServiceToggleStatus {
-    [key: string]: boolean;
-}
-
-interface ServiceToggle {
-    serviceToggle: ServiceToggleStatus;
-}
+import { readStorage } from './utils.js';
+import { Service, ServiceList, ServiceToggle } from './types';
 
 
 function loadServices(): Promise<ServiceList> {
@@ -24,17 +8,6 @@ function loadServices(): Promise<ServiceList> {
         .then(data => data as ServiceList);
 }
 
-function readStorage(key: string): Promise<object> {
-    return new Promise((resolve, reject) => {
-        chrome.storage.sync.get([key], function (result) {
-            if (chrome.runtime.lastError) {
-                reject(chrome.runtime.lastError);
-            } else {
-                resolve(result);
-            }
-        });
-    });
-}
 
 let serviceslist: Promise<ServiceList> = loadServices();
 const field = document.getElementsByClassName("field");

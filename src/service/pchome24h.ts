@@ -1,4 +1,4 @@
-export class Pchome24h {
+export class PChome24h {
   public async load() {
       // https://ecvip.pchome.com.tw/ecapi/order/v2/index.php/core/order?site=ecshop&offset=1&limit=20&date=20140101-20240817&_=1723878810533
     let now = new Date();

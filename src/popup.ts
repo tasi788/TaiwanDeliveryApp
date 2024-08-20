@@ -44,7 +44,7 @@ chrome.storage.sync.get(['api'], function (result) {
     } else {
         document.getElementById('login_btn')!.addEventListener('click', btnLogin);
     }
-    chrome.alarms.get("printLog").then((alarm) => {console.log(alarm);});
+    chrome.alarms.get("scrapOrder").then((alarm) => {console.log(alarm);});
     // console.log(al);
 });
 
@@ -67,10 +67,12 @@ async function btnLogin() {
     chrome.storage.sync.set({ api: {token: api_token} }, function () {
         console.log('Account data saved:', api_token);
     });
-    const alarm = await chrome.alarms.get("printLog");
+
+    // set alarm
+    const alarm = await chrome.alarms.get("scrapOrder");
     if (!alarm) {
         // await chrome.alarms.create("getOrder", { periodInMinutes: 60 });
-        await chrome.alarms.create("printLog", { periodInMinutes: 0.5 });
+        await chrome.alarms.create("scrapOrder", { periodInMinutes: 0.5 });
     }
     
     window.location.reload();
