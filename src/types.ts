@@ -16,3 +16,11 @@ export interface ServiceToggleStatus {
 export interface ServiceToggle {
     serviceToggle: ServiceToggleStatus;
 }
+
+export interface Token {
+    token: string
+}
+
+export interface APIToken {
+    api: Token;
+}

@@ -1,5 +1,5 @@
 export class ShopeeTW {
     public async load() {
-        console.log('ShoppeeTW loaded');
+      console.log('shopeetw loaded');
     }
-}
+  }

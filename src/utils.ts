@@ -1,4 +1,4 @@
-import { ServiceList } from './types';
+import { ServiceList } from './types.js';
 
 export function readStorage(key: string): Promise<object> {
     return new Promise((resolve, reject) => {

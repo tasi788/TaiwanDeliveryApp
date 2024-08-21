@@ -1,6 +1,6 @@
 import { PChome24h, ShopeeTW } from './service/index.js';
 import { readStorage, loadServices } from './utils.js';
-import { ServiceList, ServiceToggle } from './types.js';
+import { ServiceList, ServiceToggle, APIToken } from './types.js';
 
 chrome.alarms.onAlarm.addListener(handleAlarm)
 
@@ -12,22 +12,18 @@ class ServiceLoader{
 
 async function handleAlarm(alarm: chrome.alarms.Alarm) {
     console.log('Got alarm', alarm);
+    let api_token = await readStorage('api') as APIToken;
     if (alarm.name === "scrapOrder") {
-        
-        // let service = await loadServices();
         let toggle = await readStorage('serviceToggle') as ServiceToggle;
-        // console.log(service);
         let loader = new ServiceLoader();
         for (const key in toggle.serviceToggle) {
             let t = toggle.serviceToggle[key];
             let serviceClass = loader[key as keyof ServiceLoader];
             if (serviceClass) {
-                let serviceInstance = new serviceClass();
+                let serviceInstance = new serviceClass(api_token.api.token);
                 await serviceInstance.load();
             }
         }
-        // let client = new PChome24h();
-        // await client.load();
-        // await printLog();
+        console.log('scrapOrder');
     }
 }

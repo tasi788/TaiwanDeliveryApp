@@ -1,25 +1,6 @@
-class API {
-    url: string;
-    
-    constructor(public token: string) {
-        this.token = token;
-        this.url = "http://localhost:9000";
-    }
+export * from './api.js';
+import { API } from './api.js';
 
-    async login() {
-        const response = await fetch(this.url + "/login", {
-            method: 'GET',
-            headers: {
-                "x-api-key": `${this.token}`,
-            },
-        });
-        if (response.status === 200) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-}
 
 chrome.storage.sync.get(['api'], function (result) {
     if (result.api) {
