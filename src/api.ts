@@ -1,3 +1,4 @@
+import { API_addQuery } from "./types";
 export class API {
     public url: string;
     
@@ -12,6 +13,21 @@ export class API {
             headers: {
                 "x-api-key": `${this.token}`,
             },
+        });
+        if (response.status === 200) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public async addQuery(query: API_addQuery) {
+        const response = await fetch(this.url + "/packages/query", {
+            method: 'POST',
+            headers: {
+                "x-api-key": `${this.token}`,
+            },
+            body: JSON.stringify(query)
         });
         if (response.status === 200) {
             return true;

@@ -24,3 +24,19 @@ export interface Token {
 export interface APIToken {
     api: Token;
 }
+
+export interface API_addQuery {
+    track_id: string;
+    service: string;
+    note: string;
+}
+
+export function Service2Id(input: string): string | boolean {
+    const list: { [key: string]: string } = {
+        "網家速配": "GoPcHome",
+        "郵局": "Ipost"
+    };
+
+    return list[input] || false;
+}
+

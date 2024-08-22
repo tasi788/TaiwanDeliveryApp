@@ -18,11 +18,15 @@ async function handleAlarm(alarm: chrome.alarms.Alarm) {
         let loader = new ServiceLoader();
         for (const key in toggle.serviceToggle) {
             let t = toggle.serviceToggle[key];
-            let serviceClass = loader[key as keyof ServiceLoader];
-            if (serviceClass) {
-                let serviceInstance = new serviceClass(api_token.api.token);
-                await serviceInstance.load();
+            console.log(key, t);
+            if (t) {
+                let serviceClass = loader[key as keyof ServiceLoader];
+                if (serviceClass) {
+                    let serviceInstance = new serviceClass(api_token.api.token);
+                    await serviceInstance.load();
+                }
             }
+            
         }
         console.log('scrapOrder');
     }
