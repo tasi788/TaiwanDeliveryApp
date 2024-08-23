@@ -31,7 +31,7 @@ export interface API_addQuery {
     note: string;
 }
 
-export function Service2Id(input: string): string | boolean {
+export function Service2Id(input: string): string | false {
     const list: { [key: string]: string } = {
         "網家速配": "GoPcHome",
         "郵局": "Ipost"

@@ -1,6 +1,12 @@
-import { ServiceLoader } from './_loader.js';
-import { Service2Id } from '../types.js';
-import { API } from '../api.js';
+import {
+  ServiceLoader
+} from './_loader.js';
+import {
+  Service2Id, API_addQuery
+} from '../types.js';
+import {
+  API
+} from '../api.js';
 
 export interface PChome24hLoginInfo {
   isLogin: number
@@ -97,7 +103,9 @@ interface Warehouse {
 }
 
 interface OrderDetail {
-  Detail: { [key: string]: Detail };
+  Detail: {
+    [key: string]: Detail
+  };
   Warehouse: Warehouse[];
 }
 
@@ -108,7 +116,7 @@ interface Order {
 
 
 export class PChome24h extends ServiceLoader {
-  async valid(): Promise<boolean> {
+  async valid(): Promise < boolean > {
     // test if account token still valid.
     let timestamp = new Date().getTime();
     let url = `https://ecvip.pchome.com.tw/fsapi/member/v1/logininfo?${timestamp}`
@@ -138,7 +146,44 @@ export class PChome24h extends ServiceLoader {
     if (!resp) {
       return;
     }
-    return await resp.json() as Order;
+    try {
+      return await resp.json() as Order;
+    } catch (error) {
+      console.error('Error parsing detail response:', error);
+      return false;
+    }
+    
+  }
+
+  async getOrderList(): Promise < OrderList | false > {
+    let now = new Date();
+    let fmt = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`;
+
+    let url = `https://ecvip.pchome.com.tw/ecapi/order/v2/index.php/core/order?site=ecshop&offset=1&limit=20&date=20140101-${fmt}&_=${now.getTime()}`;
+    let resp = await fetch(url, {
+        method: 'GET',
+      })
+      .then((response) => {
+        if (response.status != 200) {
+          console.error('PChome24h order list fetch failed');
+          return false;
+        }
+        return response;
+      })
+    if (!resp) {
+      return false;
+    }
+    try {
+      return await resp.json() as OrderList;
+    } catch (error) {
+      console.error('Error parsing orderlist response:', error);
+      return false;
+    }
+  }
+
+  getDate() {
+    let now = new Date();
+    return `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`;
   }
 
   public async load() {
@@ -147,43 +192,52 @@ export class PChome24h extends ServiceLoader {
       console.log('Pchome24h not login');
       return;
     }
-    let now = new Date();
-    let fmt = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`;
-    console.log(fmt);
-    let url = `https://ecvip.pchome.com.tw/ecapi/order/v2/index.php/core/order?site=ecshop&offset=1&limit=20&date=${fmt}-${fmt}&_=${now.getTime()}`;
-    // let resp = await 
-    let resp = await fetch(url, {
-      method: 'GET',
-    })
-    .then((response) => {
-      if (response.status != 200) {
-        console.error('PChome24h order list fetch failed');
-        return false;
-      }
-      return response;
-    })
-    if (!resp) {
+    let orderList = await this.getOrderList();
+    if (!orderList) {
+      console.log('Pchome24h order list fetch failed');
       return;
     }
 
-    let orderlist: OrderList = await resp.json() as OrderList;
-    orderlist.Rows.forEach(async (row) => {
-      let detail = await this.detail(row.Id);
-      if (detail) {
-        Object.keys(detail[row.Id].Detail).forEach((key) => {
-          // Do something with each key
-          let prod = detail[row.Id].Detail[key]
-          if (prod.ShipName) {
-            let shipId = Service2Id(prod.ShipName)
-            // this.client.
-          }
-          
-          
-        });
+    // filter orderList by date range
+    // 20240621197116[:8]
+    // yyyyMMdd
+    let now = this.getDate();
+    
+    orderList.Rows.forEach(async (row) => {
+      let prod_date = row.Id.substring(0, 8)
+      if (now != prod_date) {
+        console.log('skip', row.Id);
+        return;
       }
       
+      let detail = await this.detail(row.Id);
+      let addQueryList: API_addQuery[] = [];
+      if (detail) {
+        Object.keys(detail[row.Id].Detail).forEach((key) => {
+          let prod = detail[row.Id].Detail[key]
+          if (prod.ShipName && prod.ShipId) {
+            if (addQueryList.some(item => item.track_id === prod.ShipId)) {
+              // Skip this iteration if ShipId is already in addQueryList
+              return;
+          }
+            let service_name = Service2Id(prod.ShipName)
+            if (!service_name) {
+              console.log('Service not found:', prod.ShipName);
+              return;
+            }
+            addQueryList.push({
+              track_id: prod.ShipId,
+              service: service_name,
+              note: `[PChome24h購物]-${prod.ProdName}`
+            } as API_addQuery)
+          }
+
+
+        });
+      }
+
     });
-    
+
     // // let json: OrderList;
     // await resp.json().then((data: OrderList) => {
     //   json = data;
