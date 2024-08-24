@@ -6,7 +6,8 @@
     "bulma": "^1.0.2",
     "bulma-switch": "github:montebrown/bulma-switch",
     "typescript": "^5.5.4",
-    "vite": "^5.4.1"
+    "vite": "^5.4.1",
+    "vite-plugin-static-copy": "^1.0.6"
   },
   "scripts": {
     "dev": "vite --config vite.config.js",
