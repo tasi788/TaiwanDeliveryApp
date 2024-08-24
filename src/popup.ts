@@ -52,8 +52,7 @@ async function btnLogin() {
     // set alarm
     const alarm = await chrome.alarms.get("scrapOrder");
     if (!alarm) {
-        // await chrome.alarms.create("getOrder", { periodInMinutes: 60 });
-        await chrome.alarms.create("scrapOrder", { periodInMinutes: 0.5 });
+        await chrome.alarms.create("scrapOrder", { periodInMinutes: 30 });
     }
     
     window.location.reload();

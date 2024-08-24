@@ -1,6 +1,15 @@
 import { defineConfig } from 'vite'
 import path from 'path'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
+import fs from 'fs';
+
+const serviceFiles = fs.readdirSync(path.resolve(__dirname, 'src/service'))
+    .filter(file => file.endsWith('.ts'))
+    .reduce((entries, file) => {
+        const name = path.parse(file).name;
+        entries[name] = path.resolve(__dirname, 'src/service', file);
+        return entries;
+    }, {});
 
 export default defineConfig({
     base: './',
@@ -23,6 +32,7 @@ export default defineConfig({
                 main: path.resolve(__dirname, 'index.html'),
                 popup: path.resolve(__dirname, 'popup.html'),
                 background: path.resolve(__dirname, 'src/background.ts'),
+                ...serviceFiles
             },
             output: {
                 entryFileNames: (chunkInfo) => {

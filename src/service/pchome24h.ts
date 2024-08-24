@@ -4,9 +4,6 @@ import {
 import {
   Service2Id, API_addQuery
 } from '../types.js';
-import {
-  API
-} from '../api.js';
 
 export interface PChome24hLoginInfo {
   isLogin: number
@@ -231,27 +228,13 @@ export class PChome24h extends ServiceLoader {
               note: `[PChome24h購物]-${prod.ProdName}`
             } as API_addQuery)
           }
-
-
         });
       }
-
+      if (addQueryList.length > 0) {
+        addQueryList.forEach(async (item) => {
+          await this.client.addQuery(item);
+        });
+      }
     });
-
-    // // let json: OrderList;
-    // await resp.json().then((data: OrderList) => {
-    //   json = data;
-    // }).catch((error: any) => {
-    //   console.error('PChome24h order list fetch failed');
-    //   return;
-    // });
-    // if (orderlist.status != 200) {
-    //   console.error('PChome24h order list fetch failed');
-    //   return;
-    // }
-
-
-    // let json = await orderlist.json() as OrderList;
-    // console.log(json);
   }
 }
