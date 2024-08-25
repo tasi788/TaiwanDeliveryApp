@@ -25,9 +25,8 @@
       "service_worker": "background.js",
       "type": "module"
     },
-    "permissions": ["webRequest", "storage", "offscreen", "alarms"],
+    "permissions": ["storage", "alarms"],
     "host_permissions": [
-        "*://localhost/*",
         "*://*.sudo.host/*",
         "*://ecvip.pchome.com.tw/*"
     ]

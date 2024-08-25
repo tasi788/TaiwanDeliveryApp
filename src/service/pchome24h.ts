@@ -1,6 +1,6 @@
 import {
   ServiceLoader
-} from './_loader.js';
+} from './loader.js';
 import {
   Service2Id, API_addQuery
 } from '../types.js';
