@@ -4,9 +4,10 @@ export class API {
     
     public constructor(public token: string) {
         this.token = token;
-        this.url = "http://localhost:9000";
+        this.url = "https://logistics.sudo.host";
     }
 
+    // account
     public async login() {
         const response = await fetch(this.url + "/login", {
             method: 'GET',
@@ -22,7 +23,7 @@ export class API {
     }
 
     public async addQuery(query: API_addQuery) {
-        const response = await fetch(this.url + "/packages/query", {
+        const response = await fetch(this.url + "/package/addQuery", {
             method: 'POST',
             headers: {
                 "x-api-key": `${this.token}`,

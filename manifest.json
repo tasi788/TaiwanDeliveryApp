@@ -1,6 +1,6 @@
 {
     "name": "台灣物流自動匯入",
-    "version": "1.0",
+    "version": "1.1",
     "manifest_version": 3,
     "description": "自動查詢貨物網站將貨運單號自動匯入到物流機器人內",
     "author": {
