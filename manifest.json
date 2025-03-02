@@ -1,6 +1,6 @@
 {
     "name": "台灣物流自動匯入",
-    "version": "1.1",
+    "version": "1.2",
     "manifest_version": 3,
     "description": "自動查詢貨物網站將貨運單號自動匯入到物流機器人內",
     "author": {
@@ -25,9 +25,16 @@
       "service_worker": "background.js",
       "type": "module"
     },
-    "permissions": ["storage", "alarms"],
+    "permissions": ["storage", "alarms", "scripting", "activeTab", "tabs"],
     "host_permissions": [
         "*://*.sudo.host/*",
-        "*://ecvip.pchome.com.tw/*"
-    ]
-  }
+        "*://ecvip.pchome.com.tw/*",
+        "*://api.jyb.com.tw/*"
+    ],
+    "content_scripts": [
+    {
+      "matches": ["*://*.www.kkren.com.tw/*"],
+      "js": ["injectScript.js"]
+    }
+  ]
+}

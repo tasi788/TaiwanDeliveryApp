@@ -25,7 +25,7 @@ serviceslist.then((service) => {
     let div = document.createElement("div");
     div.className = "cell";
     div.innerHTML = `<input id="${service.label}" type="checkbox" name="${service.label}" class="switch is-warning" ${checked}>
-        <label for="${service.label}" >${service.name}</label>`;
+      <label for="${service.label}">${service.name}</label>`;
 
     let checkbox = div.querySelector(
       'input[type="checkbox"]',

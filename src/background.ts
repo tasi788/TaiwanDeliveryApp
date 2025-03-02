@@ -31,3 +31,10 @@ async function handleAlarm(alarm: chrome.alarms.Alarm) {
         console.log('scrapOrder');
     }
 }
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === "LOCAL_STORAGE_DATA") {
+    console.log("Received localStorage data:", message.data);
+    // 這裡可以進行進一步處理，例如儲存到 extension 的 localStorage 或其他處理
+  }
+});

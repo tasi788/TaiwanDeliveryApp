@@ -32,12 +32,16 @@ export default defineConfig({
                 main: path.resolve(__dirname, 'index.html'),
                 popup: path.resolve(__dirname, 'popup.html'),
                 background: path.resolve(__dirname, 'src/background.ts'),
+                injectScript: path.resolve(__dirname, 'src/injectScript/kkren.ts'),
                 ...serviceFiles
             },
             output: {
                 entryFileNames: (chunkInfo) => {
                     if (chunkInfo.name === 'background') {
                         return 'background.js';
+                    }
+                    if (chunkInfo.name === 'injectScript') {
+                        return 'injectScript.js';
                     }
                     return '[name]-[hash].js';
                 }
